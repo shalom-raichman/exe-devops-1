@@ -1,3 +1,4 @@
+# B"H
 # Stage 1: Build the app using Node.js
 FROM node:18 AS builder
 
