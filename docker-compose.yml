@@ -1,0 +1,39 @@
+
+services:
+  client:
+    build:
+      context: ./client                 
+      dockerfile: Dockerfile  
+    container_name: client-app
+    ports:
+      - "1414:80"
+    networks:
+      - my-network
+
+  server:
+    build:
+      context: ./server               
+      dockerfile: Dockerfile  
+    container_name: server-app
+    ports:
+      - "1449:3000"
+    networks:
+      - my-network
+
+  mongo-db:
+    image: mongo
+    container_name: mongo-db-2
+    ports:
+      - "1477:27017"
+    networks:
+      - my-network
+    volumes:
+      - my_volume:/data/db
+    restart: always
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  my_volume:
