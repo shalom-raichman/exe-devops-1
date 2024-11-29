@@ -16,12 +16,25 @@ export const app = express();
 
 connectToMongo();
 const httpServer = http.createServer(app);
-export const io = new Server(httpServer);
+// export const io = new Server(httpServer);
+
+// Configure Socket.IO with CORS settings
+export const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:1414", // Allow requests from this origin
+    methods: ["GET", "POST"],
+  },
+});
 
 io.on("connection", handleSocketConnection);
 
+const corsOptions = {
+  origin: "http://localhost:1414",
+};
+
+
 app.use(express.json());
-app.use(cors());
+app.use(cors( corsOptions ));
 
 app.use("/api/users", usersController);
 app.use("/api/admin", adminController);
