@@ -1,14 +1,18 @@
 FROM node:16-alpine
 
+# Set working directory inside the container
 WORKDIR /app
 
-COPY . /app/
+# Copy only package.json and package-lock.json (to take advantage of Docker's caching mechanism)
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
-RUN npx tsc
-
+# Copy the rest of the application files
 COPY . .
+
+RUN npx tsc
 
 EXPOSE 3000
 
